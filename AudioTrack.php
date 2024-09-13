@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 abstract class AudioTrack
 {
-    public string $auteur;
+    public string $artiste;
     public string $titre;
     public string $genre;
     public int $duree;
     public string $nomFichier;
    
     public function __construct(
+        string $a,
         string $t,
         string $g,
         int $d,
@@ -18,6 +19,7 @@ abstract class AudioTrack
     )
     
     {
+        $this->artiste=$a;
         $this->titre=$t;
         $this->genre=$g;
         $this->duree=$d;
