@@ -1,23 +1,21 @@
 <?php
 
-class AlbumTrack
+declare(strict_types=1);
+
+class AlbumTrack extends AudioTrack
 {
-    public string $titre;
     public string $artiste;
     public string $album;
     public string $annee;
     public int $numeroPiste;
-    public string $genre;
-    public int $duree;
-    public string $nomFichier;
-
+  
     public function __construct(string $t, string $f) 
     {
         $this->titre =$t;
         $this->nomFichier=$f;
     }
 
-    public function __toString():string
+    public function __toString()
     {
         return json_encode($this);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class AlbumTrackRenderer
 {
     public AlbumTrack $track;
@@ -18,7 +20,7 @@ class AlbumTrackRenderer
             case 1:
                 return $this->renderLong();
             default:
-                return "Invalid selector";
+                return "selecteur invalide";
         }
     }
     
@@ -28,7 +30,6 @@ class AlbumTrackRenderer
                     <p>{$this->track->titre} - {$this->track->artiste}</p>
                     <audio controls>
                         <source src='{$this->track->nomFichier}' type='audio/mpeg'>
-                        Your browser does not support the audio element.
                     </audio>
                 </div>";
     }
@@ -45,8 +46,8 @@ class AlbumTrackRenderer
                     <p>Duration: {$this->track->duree} seconds</p>
                     <audio controls>
                         <source src='{$this->track->nomFichier}' type='audio/mpeg'>
-                        Your browser does not support the audio element.
                     </audio>
                 </div>";
     }
+
 }
