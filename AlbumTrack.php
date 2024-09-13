@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . "/AudioTrack.php";
+
+
+
 class AlbumTrack extends AudioTrack
 {
     public string $album;
@@ -11,7 +15,7 @@ class AlbumTrack extends AudioTrack
     public function __construct(
         string $artiste, 
         string $al,
-        string $an, string $n,
+        string $an, int $n,
         string $t, string $g, 
         int $d, string $f
         ) 
