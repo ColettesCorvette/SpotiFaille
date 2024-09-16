@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-abstract class AudioTrackRenderer
+
+abstract class AudioTrackRenderer implements Renderer
 {
     public function render(int $selecteur) : string
-    {
-        switch($selecteur)
-        {
-            case Renderer::COMPACT:
-                return $this->renderCompact();
-                break;
+    {   
 
-            case Renderer::LONG:
-                return $this->renderLong();
-                break;
+        if($selecteur===Renderer::COMPACT)
+            return $this->renderCompact();
+        
 
-        }
+        if($selecteur===Renderer::LONG)
+            return $this->renderLong();
+        
+
+        return 0;
     }    
     
     public abstract function renderCompact(): string;

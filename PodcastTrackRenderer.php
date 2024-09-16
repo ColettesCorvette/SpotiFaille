@@ -2,31 +2,28 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . "/Renderer.php";
-require_once __DIR__ . "/AudioTrack.php";
-require_once __DIR__ . "/PodcastTrack.php";
 
-
-class PodcastTrackRenderer extends AudioTrackRenderer implements Renderer 
+class PodcastTrackRenderer extends AudioTrackRenderer
 {
     public PodcastTrack $podcast;
 
-    public function __construct($podcast)
+    public function __construct(PodcastTrack $p)
     {
-        $this->podcast=$podcast;   
+        $this->podcast=$p;   
     }
 
     public function render(int $param):string
-    {
+    {   
+        
         return parent::render($param);
     }
 
     public function renderCompact(): string
     {
         return "<div>
-                    <p>{$this->track->titre} - {$this->track->artiste}</p>
+                    <p>" . htmlspecialchars($this->podcast->titre, ENT_QUOTES, 'UTF-8') . " - " . htmlspecialchars($this->podcast->auteur, ENT_QUOTES, 'UTF-8') . "</p>
                     <audio controls>
-                        <source src='{$this->track->nomFichier}' type='audio/mpeg'>
+                        <source src='" . htmlspecialchars($this->podcast->nomFichier, ENT_QUOTES, 'UTF-8') . "' type='audio/mpeg'>
                     </audio>
                 </div>";
     }
@@ -34,14 +31,13 @@ class PodcastTrackRenderer extends AudioTrackRenderer implements Renderer
     public function renderLong(): string
     {
         return "<div>
-                    <p>Title: {$this->track->titre}</p>
-                    <p>Auteur: {$this->track->artiste}</p>
-                    <p>Release: {$this->track->annee}</p>
-                    <p>Track Number: {$this->track->numeroPiste}</p>
-                    <p>Genre: {$this->track->genre}</p>
-                    <p>Duration: {$this->track->duree} seconds</p>
+                    <p>Title: " . htmlspecialchars($this->podcast->titre, ENT_QUOTES, 'UTF-8') . "</p>
+                    <p>Auteur: " . htmlspecialchars($this->podcast->auteur, ENT_QUOTES, 'UTF-8') . "</p>
+                    <p>Track Number: " . $this->podcast->numero . "</p>
+                    <p>Genre: " . htmlspecialchars($this->podcast->genre, ENT_QUOTES, 'UTF-8') . "</p>
+                    <p>Duration: " . $this->podcast->duree . " seconds</p>
                     <audio controls>
-                        <source src='{$this->track->nomFichier}' type='audio/mpeg'>
+                        <source src='" . htmlspecialchars($this->podcast->nomFichier, ENT_QUOTES, 'UTF-8') . "' type='audio/mpeg'>
                     </audio>
                 </div>";
     }

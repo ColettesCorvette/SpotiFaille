@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-class AlbumTrackRenderer extends AudioTrackRenderer implements Renderer
+
+class AlbumTrackRenderer extends AudioTrackRenderer 
 {
     public AlbumTrack $track;
 
@@ -12,34 +13,38 @@ class AlbumTrackRenderer extends AudioTrackRenderer implements Renderer
     }
 
     public function render(int $sparam): string
-    {
+    {   
+        
         return parent::render($sparam);
     }
     
     public function renderCompact(): string
     {
         return "<div>
-                    <p>{$this->track->titre} - {$this->track->artiste}</p>
-                    <audio controls>
-                        <source src='{$this->track->nomFichier}' type='audio/mpeg'>
-                    </audio>
+                    <p>" . htmlspecialchars($this->track->titre) . " - " . htmlspecialchars($this->track->auteur) . "</p>
+                    " . $this->renderAudio() . "
                 </div>";
     }
 
     public function renderLong(): string
     {
         return "<div>
-                    <p>Title: {$this->track->titre}</p>
-                    <p>Artist: {$this->track->artiste}</p>
-                    <p>Album: {$this->track->album}</p>
-                    <p>Year: {$this->track->annee}</p>
-                    <p>Track Number: {$this->track->numeroPiste}</p>
-                    <p>Genre: {$this->track->genre}</p>
-                    <p>Duration: {$this->track->duree} seconds</p>
-                    <audio controls>
-                        <source src='{$this->track->nomFichier}' type='audio/mpeg'>
-                    </audio>
+                    <p>Title: " . htmlspecialchars($this->track->titre) . "</p>
+                    <p>Artist: " . htmlspecialchars($this->track->auteur) . "</p>
+                    <p>Album: " . htmlspecialchars($this->track->album) . "</p>
+                    <p>Year: " . htmlspecialchars($this->track->annee) . "</p>
+                    <p>Track Number: " . $this->track->numero . "</p>
+                    <p>Genre: " . htmlspecialchars($this->track->genre) . "</p>
+                    <p>Duration: " . $this->track->duree . " seconds</p>
+                    " . $this->renderAudio() . "
                 </div>";
+    }
+
+    private function renderAudio(): string
+    {
+        return "<audio controls>
+                    <source src='" . htmlspecialchars($this->track->nomFichier) . "' type='audio/mpeg'>
+                </audio>";
     }
 
 }
