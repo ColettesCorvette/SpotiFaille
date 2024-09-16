@@ -2,20 +2,25 @@
 
 declare(strict_types=1);
 
-class AlbumTrackRenderer extends AudioTrackRenderer implements Renderer
+require_once __DIR__ . "/Renderer.php";
+require_once __DIR__ . "/AudioTrack.php";
+require_once __DIR__ . "/PodcastTrack.php";
+
+
+class PodcastTrackRenderer extends AudioTrackRenderer implements Renderer 
 {
-    public AlbumTrack $track;
+    public PodcastTrack $podcast;
 
-    public function __construct(AlbumTrack $t)
+    public function __construct($podcast)
     {
-        $this->track = $t;
+        $this->podcast=$podcast;   
     }
 
-    public function render(int $sparam): string
+    public function render(int $param):string
     {
-        return parent::render($sparam);
+        return parent::render($param);
     }
-    
+
     public function renderCompact(): string
     {
         return "<div>
@@ -30,9 +35,8 @@ class AlbumTrackRenderer extends AudioTrackRenderer implements Renderer
     {
         return "<div>
                     <p>Title: {$this->track->titre}</p>
-                    <p>Artist: {$this->track->artiste}</p>
-                    <p>Album: {$this->track->album}</p>
-                    <p>Year: {$this->track->annee}</p>
+                    <p>Auteur: {$this->track->artiste}</p>
+                    <p>Release: {$this->track->annee}</p>
                     <p>Track Number: {$this->track->numeroPiste}</p>
                     <p>Genre: {$this->track->genre}</p>
                     <p>Duration: {$this->track->duree} seconds</p>

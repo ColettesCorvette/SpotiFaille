@@ -13,4 +13,9 @@ class PodcastTrack extends AudioTrack
     {
         parent::__construct($auteur,$t,$g,$d,$f);   
     }
+
+    public function __toString()
+    {
+        return json_encode($this);
+    }
 }

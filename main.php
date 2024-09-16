@@ -6,11 +6,14 @@ require_once __DIR__ . "/AlbumTrack.php";
 require_once __DIR__ ."/AlbumTrackRenderer.php";
 require_once __DIR__ ."/AudioTrack.php";
 require_once __DIR__ . "/PodcastTrack.php";
+require_once __DIR__ . "/PodcastTrack.php";
+require_once __DIR__ . "/PodcastTrackRenderer.php";
 
 
 
 
 $track1 = new AlbumTrack("Bilbo","album1","2005",3,"titre1","genre1",120,"audio/01-Im_with_you_BB-King-Lucille.mp3");
+$podcast
 
 
 
