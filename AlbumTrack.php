@@ -8,14 +8,14 @@ class AlbumTrack extends AudioTrack
     protected string $annee;
   
     public function __construct(
-        string $auteur, 
+        string $artiste, 
         string $al,
         string $an,
         string $t, string $g, 
         int $d, string $f, int $numPiste
         ) 
     {   
-        parent::__construct($auteur,$t,$g,$d,$f,$numPiste);
+        parent::__construct($artiste,$t,$g,$d,$f,$numPiste);
         $this->album =$al;
         $this->annee=$an;   
     }
