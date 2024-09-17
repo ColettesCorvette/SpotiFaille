@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 class AlbumTrackRenderer extends AudioTrackRenderer 
 {
-    public AlbumTrack $track;
+    protected AlbumTrack $track;
 
     public function __construct(AlbumTrack $t)
     {

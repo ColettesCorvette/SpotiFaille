@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 class PodcastTrackRenderer extends AudioTrackRenderer
 {
-    public PodcastTrack $podcast;
+    protected PodcastTrack $podcast;
 
     public function __construct(PodcastTrack $p)
     {

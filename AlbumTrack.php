@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 class AlbumTrack extends AudioTrack
 {
-    public string $album;
-    public string $annee;
+    protected string $album;
+    protected string $annee;
   
     public function __construct(
         string $auteur, 

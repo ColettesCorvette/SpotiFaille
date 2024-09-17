@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 abstract class AudioTrack
 {
-    public string $auteur;
-    public string $titre;
-    public string $genre;
-    public int $duree;
-    public string $nomFichier;
-    public int $numero;
+    protected string $auteur;
+    protected string $titre;
+    protected string $genre;
+    protected int $duree;
+    protected string $nomFichier;
+    protected int $numero;
    
     public function __construct(
         string $a,
