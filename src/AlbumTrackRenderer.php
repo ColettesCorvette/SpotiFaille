@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 namespace iutnc\deefy\render;
-
+use iutnc\deefy\audio\tracks\AlbumTrack;
+use iutnc\deefy\render\AudioTrackRenderer;
 
 class AlbumTrackRenderer extends AudioTrackRenderer 
 {

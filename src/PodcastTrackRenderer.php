@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace iutnc\deefy\render;
+use iutnc\deefy\audio\tracks\PodcastTrack;
 
 class PodcastTrackRenderer extends AudioTrackRenderer
 {

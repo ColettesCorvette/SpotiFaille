@@ -1,4 +1,8 @@
-<?php 
+<?php
+
+namespace iutnc\deefy\render;
+
+use iutnc\deefy\audio\lists\AudioList;
 
 class AudioListRenderer implements Renderer
 {
@@ -9,13 +13,14 @@ class AudioListRenderer implements Renderer
         $this->liste=$liste;
     }
 
-    public function render(): string
+    
+    public function render(int $selector=1): string
     {
         $output = "Nom de la liste : " . $this->liste->nom . "\n";
         $output .= "Pistes :\n";
 
-        foreach ($this->liste->listePistes as $index => $piste) {
-            $output .= ($index + 1) . ". " . $piste->titre . " (" . $piste->duree . "s)\n";
+        foreach ($this->liste->listePistes as $index => $piste){
+            $output .= ($index + 1) . ". " . $piste->render($selector) . "\n";
         }
 
         $output .= "Nombre de pistes : " . $this->liste->nbPistes . "\n";

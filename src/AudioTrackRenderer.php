@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+namespace iutnc\deefy\render;
 
 abstract class AudioTrackRenderer implements Renderer
 {

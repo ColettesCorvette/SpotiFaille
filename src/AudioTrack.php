@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace iutnc\deefy\audio\tracks;
 
+
 abstract class AudioTrack
 {
     protected string $auteur;
@@ -47,7 +48,7 @@ abstract class AudioTrack
     public function __get($name)
     {
         if (!array_key_exists($name, $this->properties)) {
-            throw new InvalidPropertyNameException("Unknown property: $name");
+            return null;
         }
         return $this->$name;
     }
@@ -55,7 +56,7 @@ abstract class AudioTrack
     public function __set($name, $value)
     {
         if (!array_key_exists($name, $this->properties)) {
-            throw new InvalidPropertyNameException("Unknown property: $name");
+            return;
         }
         
         switch ($name) {
@@ -63,23 +64,17 @@ abstract class AudioTrack
             case 'titre':
             case 'genre':
             case 'nomFichier':
-                if (!is_string($value)) {
-                    throw new InvalidPropertyValueException("Invalid type for property '$name': expected string");
+                if (is_string($value)) {
+                    $this->$name = $value;
                 }
                 break;
             case 'duree':
             case 'numero':
-                if (!is_int($value)) {
-                    throw new InvalidPropertyValueException("Invalid type for property '$name': expected integer");
-                }
-                if ($name === 'duree' && $value < 0) {
-                    throw new InvalidPropertyValueException("Invalid value for property 'duree': $value");
+                if (is_int($value) && ($name !== 'duree' || $value >= 0)) {
+                    $this->$name = $value;
                 }
                 break;
-            default:
-                throw new InvalidPropertyNameException("Unknown property: $name");
         }
-        $this->$name = $value;
     }
 
 

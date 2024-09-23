@@ -1,5 +1,8 @@
 <?php
 
+namespace iutnc\deefy\audio\lists;
+
+
 abstract class AudioList
 {
     protected string $nom;

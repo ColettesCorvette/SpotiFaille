@@ -1,10 +1,14 @@
 <?php
 
+namespace iutnc\deefy\audio\lists;
+
+
+
 class Album extends AudioList
 {
 
-    private string $artiste;
-    private string $sortie; 
+    protected string $artiste;
+    protected string $sortie; 
 
     public function __construct(string $artiste, string $sortie,string $nom, array $liste)
     {
