@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace iutnc\deefy\render;
+
 
 class AlbumTrackRenderer extends AudioTrackRenderer 
 {

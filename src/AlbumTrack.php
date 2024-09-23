@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace iutnc\deefy\audio\tracks;
+
 class AlbumTrack extends AudioTrack
 {
     protected string $album;
