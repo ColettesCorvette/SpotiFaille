@@ -5,18 +5,16 @@ abstract class AudioList
     protected string $nom;
     protected int $nombrePistes;
     protected int $dureeTotale;
-    private ?array $listePistes; 
+    protected ?array $listePistes; 
     
-    public function __construct(
-        string $n,
-        int $nP,
-        int $dT,
-        array $lP =[]
-    )
+    public function __construct(string $n,array $lP =[])
     {
         $this->nom=$n;
-        $this->nombrePistes=$nP;
-        $this->dureeTotale=$dT;
+        $this->nombrePistes=count($lP);
+        $this->dureeTotale=array_reduce($lP, function($carry, $item){
+            return $carry + $item->duree;
+        },0);
+
         $this->listePistes=$lP;
     }
 
@@ -26,8 +24,5 @@ abstract class AudioList
         {
             return $this->$var;
         }
-
-        return InvalidPropertyNameValueException("n'existe pas");
     }   
-
 }

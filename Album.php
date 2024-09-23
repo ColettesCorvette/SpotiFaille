@@ -3,17 +3,14 @@
 class Album extends AudioList
 {
 
-    protected string $artiste;
-    protected string $sortie; 
+    private string $artiste;
+    private string $sortie; 
 
-    public function __construct(
-        string $a, string $s,string $n, int $nPistes, int $dureeTle,
-        array $liste
-    )
+    public function __construct(string $artiste, string $sortie,string $nom, array $liste)
     {
-        parent::__construct($n,$nPistes,$dureeTle, $liste);
-        $this->artiste=$a;
-        $this->sortie=$s;
+        parent::__construct($nom, $liste);
+        $this->artiste=$artiste;
+        $this->sortie=$sortie;
     }
 
     public function setArtiste(string $a): void

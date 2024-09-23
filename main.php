@@ -20,9 +20,6 @@ require_once "InvalidPropertyValueException.php";
 
 try
     {
-
-    
-
     $track1 = new AlbumTrack("Jean-Luc","Album","1998","Musique","beauf",120,"audio/01-Im_with_you_BB-King-Lucille.mp3",1);
 
     $podcast = new PodcastTrack("Jean-Marc","Podcast","woke",120,"audio/02-I_Need_Your_Love-BB_King-Lucille.mp3",1);    
