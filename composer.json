@@ -1,0 +1,15 @@
+{
+    "name": "thomas/spotifaille",
+    "description": "projet web php s3",
+    "authors": [
+        {
+            "name": "thomas fuchs"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "iutnc\\deefy\\":"./src/classes"
+        }
+    },
+    "require": {}
+}
