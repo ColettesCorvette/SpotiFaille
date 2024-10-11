@@ -9,6 +9,10 @@ ini_set('display_errors', '1');
 
 require_once "vendor/autoload.php";
 
+use iutnc\deefy\action\AddPlaylistAction;
+use iutnc\deefy\action\AddPodcastTrackAction;
+use iutnc\deefy\action\DefaultAction;
+use iutnc\deefy\action\DisplayPlaylistAction;
 use iutnc\deefy\audio\tracks\AlbumTrack;
 use iutnc\deefy\audio\tracks\PodcastTrack;
 use iutnc\deefy\render\AlbumTrackRenderer;
@@ -24,27 +28,35 @@ use iutnc\deefy\exception\InvalidPropertyValueException;
 
 try
     {
-        session_start();
+        //session_start();
 
-        $track1 = new AlbumTrack("Jean-Luc","Album","1998","Musique","beauf",120,"./Im_with_you_BB-King-Lucille.mp3",1);
-        $track2 = new AlbumTrack("Jean-Bidule","Aya","2000","Musique","beauf",120,"./Im_with_you_BB-King-Lucille.mp3",1);
+        //$track1 = new AlbumTrack("Jean-Luc","Album","1998","Musique","beauf",120,"./Im_with_you_BB-King-Lucille.mp3",1);
+        //$track2 = new AlbumTrack("Jean-Bidule","Aya","2000","Musique","beauf",120,"./Im_with_you_BB-King-Lucille.mp3",1);
 
-        $podcast = new PodcastTrack("Jean-Marc","Podcast","woke",120,"./I_Need_Your_Love-BB_King-Lucille.mp3",1);
+        //$podcast = new PodcastTrack("Jean-Marc","Podcast","woke",120,"./I_Need_Your_Love-BB_King-Lucille.mp3",1);
 
-        $_SESSION["playlist"] = new Playlist("MaPlaylist",[$track1,$podcast]);
+        //$_SESSION["playlist"] = new Playlist("MaPlaylist",[$track1,$podcast]);
 
-        $_SESSION["playlist"]->ajout($track2);
+        //$_SESSION["playlist"]->ajout($track2);
 
-        $playlistRenderer = new AudioListRenderer($_SESSION["playlist"]);
+        //$playlistRenderer = new AudioListRenderer($_SESSION["playlist"]);
 
-        echo $playlistRenderer->render(Renderer::LONG);
+        //echo $playlistRenderer->render(Renderer::LONG);
 
         //$r = new AlbumTrackRenderer($track1);
         //$p = new PodcastTrackRenderer($podcast);
 
-    
         //echo $r->render(Renderer::LONG);
         //echo $p->render(Renderer::LONG);
+
+        $default = new DefaultAction();
+        $create_playlist = new AddPlaylistAction();
+        $add_track = new AddPodcastTrackAction();
+        $display_playlist = new DisplayPlaylistAction();
+        echo $default->execute();
+        echo $create_playlist->execute();
+        echo $add_track->execute();
+        echo $display_playlist->execute();
 
        
     } catch (InvalidPropertyNameException $e) {
