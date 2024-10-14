@@ -5,7 +5,7 @@ declare(strict_types=1);
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-
+session_start();
 
 require_once "vendor/autoload.php";
 
@@ -23,17 +23,15 @@ use iutnc\deefy\audio\lists\Album;
 use iutnc\deefy\audio\lists\Playlist;
 use iutnc\deefy\exception\InvalidPropertyNameException;
 use iutnc\deefy\exception\InvalidPropertyValueException;
-
+use iutnc\deefy\dispatch\Dispatcher;
 
 
 try
     {
-        //session_start();
 
-        //$track1 = new AlbumTrack("Jean-Luc","Album","1998","Musique","beauf",120,"./Im_with_you_BB-King-Lucille.mp3",1);
-        //$track2 = new AlbumTrack("Jean-Bidule","Aya","2000","Musique","beauf",120,"./Im_with_you_BB-King-Lucille.mp3",1);
-
-        //$podcast = new PodcastTrack("Jean-Marc","Podcast","woke",120,"./I_Need_Your_Love-BB_King-Lucille.mp3",1);
+        $track1 = new AlbumTrack("Jean-Luc","Album","1998","Musique","beauf",120,"URL",1);
+        $track2 = new AlbumTrack("Jean-Bidule","Aya","2000","Musique","beauf",120,"URL",1);
+        $podcast = new PodcastTrack("Jean-Marc","Podcast","woke",120,"URL",1);
 
         //$_SESSION["playlist"] = new Playlist("MaPlaylist",[$track1,$podcast]);
 
@@ -49,16 +47,10 @@ try
         //echo $r->render(Renderer::LONG);
         //echo $p->render(Renderer::LONG);
 
-        $default = new DefaultAction();
-        $create_playlist = new AddPlaylistAction();
-        $add_track = new AddPodcastTrackAction();
-        $display_playlist = new DisplayPlaylistAction();
-        echo $default->execute();
-        echo $create_playlist->execute();
-        echo $add_track->execute();
-        echo $display_playlist->execute();
+        $dispatcher = new Dispatcher();
+        $dispatcher->run();
 
-       
+
     } catch (InvalidPropertyNameException $e) {
         echo "Erreur : " . $e->getMessage() . "\n";
         echo $e->getTraceAsString() . "\n";
