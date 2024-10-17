@@ -10,14 +10,14 @@ abstract class AudioList
     protected int $dureeTotale;
     protected ?array $listePistes; 
     
-    public function __construct(string $n,array $lP =[])
+    public function __construct(string $n,array $lP=[])
     {
+
         $this->nom=$n;
         $this->nombrePistes=count($lP);
         $this->dureeTotale=array_reduce($lP, function($carry, $item){
             return $carry + $item->duree;
         },0);
-
         $this->listePistes=$lP;
     }
 

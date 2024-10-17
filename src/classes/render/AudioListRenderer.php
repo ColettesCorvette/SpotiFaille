@@ -32,7 +32,7 @@ class AudioListRenderer implements Renderer
             $output .= ($index + 1) . ". " . $renderer->render($selector) . "\n";
         }
 
-        $output .= "Nombre de pistes : " . $this->liste->nbPistes . "\n";
+        $output .= "Nombre de pistes : " . $this->liste->nombrePistes . "\n";
         $output .= "Durée totale : " . $this->liste->dureeTotale . "s\n";
 
         return $output;
