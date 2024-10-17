@@ -11,6 +11,6 @@
         }
         public function execute(): string
         {
-            return "Coucou" . '<br>';
+            return "Bienvenue !" . '<br>';
         }
     }

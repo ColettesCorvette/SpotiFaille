@@ -28,7 +28,6 @@ use iutnc\deefy\dispatch\Dispatcher;
 
 try
     {
-
         $track1 = new AlbumTrack("Jean-Luc","Album","1998","Musique","beauf",120,"URL",1);
         $track2 = new AlbumTrack("Jean-Bidule","Aya","2000","Musique","beauf",120,"URL",1);
         $podcast = new PodcastTrack("Jean-Marc","Podcast","woke",120,"URL",1);
@@ -49,7 +48,6 @@ try
 
         $dispatcher = new Dispatcher();
         $dispatcher->run();
-
 
     } catch (Exception $e) {
         echo "Erreur : " . $e->getMessage() . "\n";
