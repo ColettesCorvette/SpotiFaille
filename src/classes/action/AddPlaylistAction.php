@@ -15,7 +15,7 @@ class AddPlaylistAction extends Action
     public function execute(): string
     {
         $playlist = new Playlist("Playlist_1", []);
-        $_SESSION['playlist'] = $playlist;
+        $_SESSION['playlist'] = serialize($playlist);
         return "Playlist créee et ajoutée à la session.";
     }
 }

@@ -51,10 +51,7 @@ try
         $dispatcher->run();
 
 
-    } catch (InvalidPropertyNameException $e) {
-        echo "Erreur : " . $e->getMessage() . "\n";
-        echo $e->getTraceAsString() . "\n";
-    } catch (InvalidPropertyValueException $e) {
+    } catch (Exception $e) {
         echo "Erreur : " . $e->getMessage() . "\n";
         echo $e->getTraceAsString() . "\n";
     }

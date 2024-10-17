@@ -18,11 +18,11 @@ class DisplayPlaylistAction extends Action
     {
 
         if (isset($_SESSION['playlist'])) {
-            $playlistRenderer = new AudioListRenderer($_SESSION['playlist']);
+            $pl = unserialize($_SESSION['playlist']);
+            $playlistRenderer = new AudioListRenderer($pl);
             return $playlistRenderer->render(Renderer::LONG);
         } else {
             return "No playlist in session.";
         }
-
     }
 }
