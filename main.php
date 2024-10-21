@@ -5,7 +5,7 @@ declare(strict_types=1);
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-session_start();
+
 
 require_once "vendor/autoload.php";
 
@@ -28,9 +28,11 @@ use iutnc\deefy\dispatch\Dispatcher;
 
 try
     {
-        $track1 = new AlbumTrack("Jean-Luc","Album","1998","Musique","beauf",120,"URL",1);
-        $track2 = new AlbumTrack("Jean-Bidule","Aya","2000","Musique","beauf",120,"URL",1);
-        $podcast = new PodcastTrack("Jean-Marc","Podcast","woke",120,"URL",1);
+        session_start();
+        //phpinfo();
+        //$track1 = new AlbumTrack("Jean-Luc","Album","1998","Musique","beauf",120,"URL",1);
+        //$track2 = new AlbumTrack("Jean-Bidule","Aya","2000","Musique","beauf",120,"URL",1);
+        //$podcast = new PodcastTrack("Jean-Marc","Podcast","woke",120,"URL",1);
 
         //$_SESSION["playlist"] = new Playlist("MaPlaylist",[$track1,$podcast]);
 

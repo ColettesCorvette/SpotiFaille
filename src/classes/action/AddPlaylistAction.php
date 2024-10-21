@@ -2,8 +2,9 @@
 
 namespace iutnc\deefy\action;
 
-use iutnc\deefy\action\Action;
 use iutnc\deefy\audio\lists\Playlist;
+use iutnc\deefy\render\AudioListRenderer;
+use iutnc\deefy\render\Renderer;
 
 class AddPlaylistAction extends Action
 {
@@ -14,8 +15,27 @@ class AddPlaylistAction extends Action
     }
     public function execute(): string
     {
-        $playlist = new Playlist("Playlist_1", []);
-        $_SESSION['playlist'] = serialize($playlist);
-        return "Playlist créee et ajoutée à la session.";
+
+        if($_SERVER['REQUEST_METHOD']==='GET')
+        {
+            return <<<HTML
+            <form method="post" action="?action=add-playlist">
+                <label for="playlist_name">Nom de la playlist :</label>
+                <input type="text" id="playlist_name" name="playlist_name" required>
+                <button type="submit">Créer la playlist</button>
+            </form>
+            HTML;
+        }
+
+        if($_SERVER['REQUEST_METHOD']==='POST')
+        {
+            $playlistName = filter_var($_POST['playlist_name'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $playlist = new Playlist($playlistName, []);
+            $_SESSION['playlist'] = serialize($playlist);
+            $playlistRenderer = new AudioListRenderer($playlist);
+            $renderedPlaylist = $playlistRenderer->render(Renderer::LONG);
+            return $renderedPlaylist . '<br>'.'<a href="?action=add-track">Ajouter une piste</a>';
+        }
+        return "Invalid request method.";
     }
 }

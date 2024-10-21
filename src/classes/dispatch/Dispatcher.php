@@ -2,6 +2,7 @@
 
     namespace iutnc\deefy\dispatch;
     
+    use iutnc\deefy\action\AddUserAction;
     use iutnc\deefy\action\DefaultAction;
     use iutnc\deefy\action\DisplayPlaylistAction;
     use iutnc\deefy\action\AddPlaylistAction;
@@ -9,47 +10,60 @@
 
     class Dispatcher
     {
-        private string $action;
-
-        public function __construct()
-        {
-            $this->action = $_GET['action'] ?? 'default';
-        }
         public function run(): void
         {
-            switch ($this->action)
+            $action = $_GET['action'] ?? 'default';
+
+            switch ($action)
             {
-                case 'playlist':
-                    $action = new DisplayPlaylistAction();
-                    break;
                 case 'add-playlist':
-                    $action = new AddPlaylistAction();
+                    $actionInstance = new AddPlaylistAction();
                     break;
                 case 'add-track':
-                    $action = new AddPodcastTrackAction();
+                    $actionInstance = new AddPodcastTrackAction();
                     break;
-                case 'default':
+                case 'display-playlist':
+                    $actionInstance = new DisplayPlaylistAction();
+                    break;
+                case 'add-user':
+                    $actionInstance = new AddUserAction();
+                    break;
                 default:
-                    $action = new DefaultAction();
+                    $actionInstance = new DefaultAction();
                     break;
             }
-            $html = $action->execute();
-            $this->renderPage($html);
+            $this->renderPage($actionInstance->execute());
         }
+
 
         private function renderPage(string $html): void
         {
-            $fullDocument = "<!DOCTYPE html>
+            $fullDocument = <<<HTML
+            <!DOCTYPE html>
             <html lang='en'>
             <head>
                 <meta charset='UTF-8'>
                 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                <title>Document</title>
+                <title>SpotiFail</title>
             </head>
             <body>
-            $html
+                <header>
+                    <h1>SpotiFaille</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="?action=default">Accueil</a></li>
+                            <li><a href="?action=add-user">S'identifier</a></li>
+                            <li><a href="?action=add-playlist">Créer une playlist</a></li>
+                            <li><a href="?action=display-playlist">Afficher la playlist</a></li>
+                        </ul>
+                    </nav>
+                </header>
+                <main>
+                    $html
+                </main>
             </body>
-            </html>";
+            </html>
+            HTML;
             echo $fullDocument;
         }
     }
