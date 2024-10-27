@@ -11,5 +11,7 @@
             "iutnc\\deefy\\":"./src/classes"
         }
     },
-    "require": {}
+    "require": {
+      "ext-pdo": "*"
+    }
 }

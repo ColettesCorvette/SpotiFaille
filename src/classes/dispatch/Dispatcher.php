@@ -4,6 +4,7 @@
     
     use iutnc\deefy\action\AddUserAction;
     use iutnc\deefy\action\DefaultAction;
+    use iutnc\deefy\action\DisplayListPlaylistAction;
     use iutnc\deefy\action\DisplayPlaylistAction;
     use iutnc\deefy\action\AddPlaylistAction;
     use iutnc\deefy\action\AddPodcastTrackAction;
@@ -28,14 +29,15 @@
                 case 'add-user':
                     $actionInstance = new AddUserAction();
                     break;
+                case 'display-list':
+                    $actionInstance = new DisplayListPlaylistAction();
+                    break;
                 default:
                     $actionInstance = new DefaultAction();
                     break;
             }
             $this->renderPage($actionInstance->execute());
         }
-
-
         private function renderPage(string $html): void
         {
             $fullDocument = <<<HTML
@@ -52,9 +54,11 @@
                     <nav>
                         <ul>
                             <li><a href="?action=default">Accueil</a></li>
-                            <li><a href="?action=add-user">S'identifier</a></li>
+                            <li><a href="?action=add-user">S'inscrire</a></li>
+                            <li><a href="?action=">S'authentifier</a></li>
                             <li><a href="?action=add-playlist">Créer une playlist</a></li>
-                            <li><a href="?action=display-playlist">Afficher la playlist</a></li>
+                            <li><a href="?action=display-playlist">Afficher la playlist courante</a></li>
+                            <li><a href="?action=display-list">Mes playlists</a></li>
                         </ul>
                     </nav>
                 </header>

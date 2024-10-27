@@ -5,6 +5,7 @@ declare(strict_types=1);
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
+session_start();
 
 
 require_once "vendor/autoload.php";
@@ -24,11 +25,12 @@ use iutnc\deefy\audio\lists\Playlist;
 use iutnc\deefy\exception\InvalidPropertyNameException;
 use iutnc\deefy\exception\InvalidPropertyValueException;
 use iutnc\deefy\dispatch\Dispatcher;
+use iutnc\deefy\repository\DeefyRepository;
 
 
 try
     {
-        session_start();
+
         //phpinfo();
         //$track1 = new AlbumTrack("Jean-Luc","Album","1998","Musique","beauf",120,"URL",1);
         //$track2 = new AlbumTrack("Jean-Bidule","Aya","2000","Musique","beauf",120,"URL",1);
@@ -47,6 +49,11 @@ try
 
         //echo $r->render(Renderer::LONG);
         //echo $p->render(Renderer::LONG);
+
+
+
+
+        DeefyRepository::setConfig("config.db.ini");
 
         $dispatcher = new Dispatcher();
         $dispatcher->run();

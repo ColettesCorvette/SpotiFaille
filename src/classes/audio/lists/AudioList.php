@@ -5,6 +5,7 @@ namespace iutnc\deefy\audio\lists;
 
 abstract class AudioList
 {
+    protected int $id;
     protected string $nom;
     protected int $nombrePistes;
     protected int $dureeTotale;
@@ -27,5 +28,11 @@ abstract class AudioList
         {
             return $this->$var;
         }
-    }   
+        return "Property $var does not exist";
+    }
+
+    public function setID(int $id): void
+    {
+        $this->id = $id;
+    }
 }

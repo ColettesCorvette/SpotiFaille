@@ -2,26 +2,20 @@
 
 namespace iutnc\deefy\action;
 
-
-use iutnc\deefy\audio\lists\Playlist;
 use iutnc\deefy\audio\tracks\PodcastTrack;
 use iutnc\deefy\render\AudioListRenderer;
 use iutnc\deefy\render\Renderer;
+use iutnc\deefy\repository\DeefyRepository;
 
 class AddPodcastTrackAction extends Action
 {
-
     public function __construct()
     {
         parent::__construct();
     }
-
     public function execute(): string
     {
-
-
         if($_SERVER['REQUEST_METHOD']==='POST'){
-
 
             if(!isset($_FILES['file']) || $_FILES['file']['error']!==UPLOAD_ERR_OK){
                 exit("Erreur: Aucun fichier uploadé ou erreur lors de l'upload");
@@ -33,22 +27,30 @@ class AddPodcastTrackAction extends Action
             $genre = filter_var($_POST['genre'], FILTER_SANITIZE_SPECIAL_CHARS);
             $duration = filter_var($_POST['duration'], FILTER_SANITIZE_NUMBER_INT);
             $episodeNumber = filter_var($_POST['episode_number'], FILTER_SANITIZE_NUMBER_INT);
+            $year = filter_var($_POST['year'], FILTER_SANITIZE_NUMBER_INT);
             $audioFile = $_FILES['file']['name'];
 
+            // Format the year
+            $formattedYear= date("Y-m-d", strtotime($year));
+
             //deplacer le fichier uploadé vers le dossier cible
-            $targetDir = "";
+            $targetDir = "C:\\Users\\Thomas\\PhpstormProjects\\SpotiFaille\\audio\\";
             $targetFile = $targetDir . basename($audioFile);
             move_uploaded_file($_FILES['file']['tmp_name'],$targetFile);
 
-
             //creer une nouvelle piste
-            $podcastTrack = new PodcastTrack($author,$title,$genre,$duration,$targetFile,$episodeNumber);
+            $podcastTrack = new PodcastTrack($author,$title,$genre,$duration,$targetFile,$episodeNumber,$formattedYear);
+            $savedTrack = DeefyRepository::getInstance()->saveTrack($podcastTrack);
+
+            if (!$savedTrack) {
+                exit("Error: Failed to save the track");
+            }
 
             //recupérer la playlist de la session
             $playlist= unserialize($_SESSION['playlist']);
 
             //ajouter la nouvelle piste à la playlist
-            $playlist->ajout($podcastTrack);
+            $playlist->ajout($savedTrack);
 
             //Enregistrer la playlist mise à jour dans la session
             $_SESSION['playlist'] = serialize($playlist);
@@ -78,6 +80,8 @@ class AddPodcastTrackAction extends Action
             <input type="number" id="duration" name="duration" required>
             <label for="episode_number">Episode Number:</label>
             <input type="number" id="episode_number" name="episode_number" required>
+            <label for="year">Year:</label>
+            <input type="date" id="year" name="year" required>
             <label for="file">Audio File:</label>
             <input type="file" id="file" name="file" accept=".mp3" required>
             <button type="submit">UPLOAD</button>

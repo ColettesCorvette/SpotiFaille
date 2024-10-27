@@ -7,6 +7,7 @@ namespace iutnc\deefy\audio\tracks;
 
 abstract class AudioTrack
 {
+    protected int $id;
     protected string $auteur;
     protected string $titre;
     protected string $genre;
@@ -22,8 +23,8 @@ abstract class AudioTrack
         "nomFichier" => "a",
         "numero" => 0,
         "album" => "a",
-        "annee" => "a"
-        
+        "annee" => "a",
+        "date" => "a"
     ];
    
     public function __construct(
@@ -75,6 +76,11 @@ abstract class AudioTrack
                 }
                 break;
         }
+    }
+
+    public function setID(int $id): void
+    {
+        $this->id = $id;
     }
 
 
