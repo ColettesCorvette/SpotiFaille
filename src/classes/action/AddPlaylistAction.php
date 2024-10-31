@@ -33,8 +33,9 @@ class AddPlaylistAction extends Action
             $playlistName = filter_var($_POST['playlist_name'], FILTER_SANITIZE_SPECIAL_CHARS);
             $playlist = new Playlist($playlistName, []);
             $playlist = DeefyRepository::getInstance()->saveEmptyPlaylist($playlist);
-            $_SESSION['playlist'] = serialize($playlist);
             $playlistRenderer = new AudioListRenderer($playlist);
+            $_SESSION['playlist'] = serialize($playlist);
+
             $renderedPlaylist = $playlistRenderer->render(Renderer::LONG);
             return $renderedPlaylist . '<br>'.'<a href="?action=add-track">Ajouter une piste</a>';
         }

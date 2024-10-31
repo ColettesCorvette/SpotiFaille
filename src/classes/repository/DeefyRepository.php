@@ -1,12 +1,11 @@
 <?php
 
 namespace iutnc\deefy\repository;
-
-use DateTime;
 use Exception;
 use iutnc\deefy\audio\lists\Playlist;
 use iutnc\deefy\audio\tracks\AlbumTrack;
 use iutnc\deefy\audio\tracks\AudioTrack;
+use iutnc\deefy\audio\tracks\PodcastTrack;
 use PDO;
 
 class DeefyRepository 
@@ -50,15 +49,53 @@ class DeefyRepository
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['id' => $id]);
         $row = $stmt->fetch();
-        if(!$row)
+        if (!$row) {
             throw new \Exception("Playlist non trouvée");
+        }
 
-        $playlist = new Playlist($row['nom'],[]);
+        $playlist = new Playlist($row['nom'], []);
         $playlist->setID($row['id']);
+
+        // Récupérer les pistes associées à la playlist
+        $trackQuery = "SELECT t.* FROM track t 
+                   JOIN playlist2track p2t ON t.id = p2t.id_track 
+                   WHERE p2t.id_pl = :id";
+        $trackStmt = $this->pdo->prepare($trackQuery);
+        $trackStmt->execute(['id' => $id]);
+        $tracks = $trackStmt->fetchAll();
+
+        foreach ($tracks as $trackRow) {
+            if ($trackRow['type'] === 'A') {
+                $track = new AlbumTrack(
+                    $trackRow['artiste_album'],
+                    $trackRow['titre'],
+                    $trackRow['annee_album'],
+                    $trackRow['genre'],
+                    $trackRow['filename'],
+                    $trackRow['duree'],
+                    $trackRow['numero_album'] ?? 0,
+                    0
+                );
+            } else {
+                $track = new PodcastTrack(
+                    $trackRow['auteur_podcast'],
+                    $trackRow['titre'],
+                    $trackRow['genre'],
+                    $trackRow['duree'],
+                    $trackRow['filename'],
+                    $trackRow['numero_album'] ?? 0,
+                    $trackRow['date_podcast']
+                );
+            }
+            $track->setID($trackRow['id']);
+            $playlist->ajout($track);
+        }
+
         return $playlist;
     }
     public function saveEmptyPlaylist(Playlist $p) : Playlist
     {
+        $this->pdo->exec("ALTER TABLE playlist AUTO_INCREMENT = 1");
         $query = "INSERT INTO playlist (nom) VALUES (:nom)";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['nom' => $p->nom]);
@@ -84,27 +121,31 @@ class DeefyRepository
         $query = "INSERT INTO playlist2track (id_pl, id_track, no_piste_dans_liste) VALUES (:id_pl, :id_track, :no_piste_dans_liste)";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([
-            'playlist_id' => $playlistId,
-            'track_id' => $trackId,
+            'id_pl' => $playlistId,
+            'id_track' => $trackId,
             'no_piste_dans_liste' => DeefyRepository::getInstance()->findPlaylistById($playlistId)->nombrePistes+1
         ]);
     }
 
     public function saveTrack(AudioTrack $track): AudioTrack
     {
-        $albumName = '';
-        $dateAlbum = 0;
-        $artiste = '';
+        $this->pdo->exec("ALTER TABLE track AUTO_INCREMENT = 1");
+        $albumName = null;
+        $artiste = null;
+        $filePath = $track->nomFichier;
+        $audioFile = str_replace("audio/", "", $filePath);
+
         if($track instanceof AlbumTrack) {
             $type = 'A';
             $albumName = $track->album;
-            $dateAlbum = (int) $track->annee;
+            $dateAlbum = (int)$track->annee;
             $artiste = $track->artiste;
         }
-        else{
+        else if($track instanceof PodcastTrack) {
             $type = 'P';
             $datePodcast = $track->date;
             $auteur = $track->auteur;
+            $dateAlbum = null;
         }
         $query = "INSERT INTO track (titre, genre, duree, filename, type, artiste_album, 
                    titre_album, annee_album, numero_album, auteur_podcast, date_podcast) 
@@ -115,7 +156,7 @@ class DeefyRepository
             'titre' => $track->titre,
             'genre' => $track->genre,
             'duree' => $track->duree,
-            'filename' => $track->nomFichier,
+            'filename' => $audioFile,
             'type' => $type,
             'artiste_album' => $artiste,
             'titre_album' => $albumName,

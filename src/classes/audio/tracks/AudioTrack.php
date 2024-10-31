@@ -24,7 +24,8 @@ abstract class AudioTrack
         "numero" => 0,
         "album" => "a",
         "annee" => "a",
-        "date" => "a"
+        "date" => "a",
+        "id" => 0
     ];
    
     public function __construct(

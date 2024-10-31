@@ -34,23 +34,27 @@ class AddPodcastTrackAction extends Action
             $formattedYear= date("Y-m-d", strtotime($year));
 
             //deplacer le fichier uploadé vers le dossier cible
-            $targetDir = "C:\\Users\\Thomas\\PhpstormProjects\\SpotiFaille\\audio\\";
-            $targetFile = $targetDir . basename($audioFile);
+            $targetDir = "audio/";
+            $targetFile = $targetDir . $audioFile;
             move_uploaded_file($_FILES['file']['tmp_name'],$targetFile);
 
             //creer une nouvelle piste
             $podcastTrack = new PodcastTrack($author,$title,$genre,$duration,$targetFile,$episodeNumber,$formattedYear);
             $savedTrack = DeefyRepository::getInstance()->saveTrack($podcastTrack);
 
+
             if (!$savedTrack) {
                 exit("Error: Failed to save the track");
             }
+
 
             //recupérer la playlist de la session
             $playlist= unserialize($_SESSION['playlist']);
 
             //ajouter la nouvelle piste à la playlist
             $playlist->ajout($savedTrack);
+            DeefyRepository::getInstance()->addTrackToPlaylist($savedTrack->id, $playlist->id);
+
 
             //Enregistrer la playlist mise à jour dans la session
             $_SESSION['playlist'] = serialize($playlist);

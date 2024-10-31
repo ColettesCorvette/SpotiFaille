@@ -20,7 +20,7 @@ class DisplayPlaylistAction extends Action
         if (isset($_SESSION['playlist'])) {
             $pl = unserialize($_SESSION['playlist']);
             $playlistRenderer = new AudioListRenderer($pl);
-            return $playlistRenderer->render(Renderer::LONG);
+            return $playlistRenderer->render(Renderer::LONG) . '<br>' .'<a href="?action=add-track">Ajouter encore une piste</a>';
         } else {
             return "No playlist in session.";
         }
