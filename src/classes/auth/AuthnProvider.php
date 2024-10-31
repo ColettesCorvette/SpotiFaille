@@ -29,10 +29,11 @@ class AuthnProvider
         }
     }
 
-    public static function getSignedInUser( ): User {
-        if ( !isset($_SESSION['user']))
-            throw new AuthException("Auth error : not signed in");
-        return unserialize($_SESSION['user'] ) ;
+    public static function getSignedInUser(): User {
+        if (!isset($_SESSION['user'])) {
+            throw new AuthnException("Auth error: not signed in");
+        }
+        return unserialize($_SESSION['user']);
     }
 
     /**
