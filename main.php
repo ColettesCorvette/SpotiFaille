@@ -16,6 +16,7 @@ use iutnc\deefy\action\DefaultAction;
 use iutnc\deefy\action\DisplayPlaylistAction;
 use iutnc\deefy\audio\tracks\AlbumTrack;
 use iutnc\deefy\audio\tracks\PodcastTrack;
+use iutnc\deefy\auth\AuthnProvider;
 use iutnc\deefy\render\AlbumTrackRenderer;
 use iutnc\deefy\render\AudioListRenderer;
 use iutnc\deefy\render\PodcastTrackRenderer;
@@ -54,6 +55,7 @@ try
 
 
         DeefyRepository::setConfig("config.db.ini");
+        AuthnProvider::init(DeefyRepository::getInstance()->getPdo());
 
         $dispatcher = new Dispatcher();
         $dispatcher->run();

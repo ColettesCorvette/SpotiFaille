@@ -8,6 +8,7 @@
     use iutnc\deefy\action\DisplayPlaylistAction;
     use iutnc\deefy\action\AddPlaylistAction;
     use iutnc\deefy\action\AddPodcastTrackAction;
+    use iutnc\deefy\action\SigninAction;
 
     class Dispatcher
     {
@@ -32,6 +33,9 @@
                 case 'display-list':
                     $actionInstance = new DisplayListPlaylistAction();
                     break;
+                case 'signin':
+                    $actionInstance = new SigninAction();
+                    break;
                 default:
                     $actionInstance = new DefaultAction();
                     break;
@@ -55,7 +59,7 @@
                         <ul>
                             <li><a href="?action=default">Accueil</a></li>
                             <li><a href="?action=add-user">S'inscrire</a></li>
-                            <li><a href="?action=">S'authentifier</a></li>
+                            <li><a href="?action=signin">S'authentifier</a></li>
                             <li><a href="?action=add-playlist">Créer une playlist</a></li>
                             <li><a href="?action=display-playlist">Afficher la playlist courante</a></li>
                             <li><a href="?action=display-list">Mes playlists</a></li>

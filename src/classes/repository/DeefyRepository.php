@@ -27,6 +27,11 @@ class DeefyRepository
         return self::$instance;
     }
 
+    public function getPdo(): PDO
+    {
+        return $this->pdo;
+    }
+
     public static function setConfig(string $file) : void
     {
         $conf = parse_ini_file($file);
@@ -168,6 +173,8 @@ class DeefyRepository
         $track->setID($this->pdo->lastInsertId());
         return $track;
     }
+
+
 }
 
 
